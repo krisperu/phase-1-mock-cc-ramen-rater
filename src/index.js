@@ -3,10 +3,10 @@ const baseUrl = "http://localhost:3000"
 // DOM Selector && Created Elements
 const ramenMenu = document.querySelector('#ramen-menu')
 const ramenDetail = document.querySelector('#ramen-detail')
-const newRamen = document.querySelector('#new-ramen')
+const rating = document.querySelector('#rating-display')
+const comment = document.querySelector('#comment-display')
 
 // Register Listeners
-ramenMenu.addEventListener('click', detailHandler)
 
 
 // Fetches [function]
@@ -23,20 +23,27 @@ function renderAllRamen(ramenArray){
 }
 
 function renderOneRamen(ramenObj){
-    const pics = document.createElement('div');
-    pics.innerHTML = `
-    <img class="detail-image" src="${ramenObj.image}" alt="${ramenObj.name} picture" />
-    `
+    const img = document.createElement('img');
 
-    ramenMenu.appendChild(pics)
+    img.src = ramenObj.image
+
+    img.addEventListener('click', () => renderDetail(ramenObj))
+
+    ramenMenu.appendChild(img)
 }
 
+function renderDetail(ramObj) {
+    console.log(ramObj)
+    ramenDetail.innerHTML = `
+    <img class="detail-image" src="${ramObj.image}" alt="${ramObj.name}" />
+    <h2 class="name">${ramObj.name}/h2>
+    <h3 class="restaurant">${ramObj.restaurant}</h3>
+    `
+    rating.textContent = ramObj.rating;
+    comment.textContent = ramObj.comment;
+}
 
 // Event Handlers [function]
-function detailHandler(){
-    console.log("Img Clicked")
-}
-
 
 // Initializers
 fetchRamen().then(renderAllRamen)
