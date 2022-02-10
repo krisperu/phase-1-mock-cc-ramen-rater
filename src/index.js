@@ -5,9 +5,10 @@ const ramenMenu = document.querySelector('#ramen-menu')
 const ramenDetail = document.querySelector('#ramen-detail')
 const rating = document.querySelector('#rating-display')
 const comment = document.querySelector('#comment-display')
+const newRamen = document.querySelector('#new-ramen')
 
 // Register Listeners
-
+newRamen.addEventListener('submit', handleAddRamen)
 
 // Fetches [function]
 function fetchRamen(){
@@ -44,6 +45,23 @@ function renderDetail(ramObj) {
 }
 
 // Event Handlers [function]
-
+function handleAddRamen(e){
+    e.preventDefault()
+    const name = e.target.name.value
+    const restaurant = e.target.restaurant.value
+    const image = e.target.image.value
+    const rating = e.target.rating.value
+    const comment = e.target["new-comment"].value
+    const newRamObj = {
+        name,
+        restaurant,
+        image,
+        rating,
+        comment
+    }
+    
+    renderOneRamen(newRamObj)
+    newRamen.reset()
+}
 // Initializers
 fetchRamen().then(renderAllRamen)
